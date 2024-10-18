@@ -1,4 +1,4 @@
-from typing import Dict, List, Union
+from typing import Dict, Union
 
 
 class Product:
@@ -6,14 +6,16 @@ class Product:
 
     name: str
     description: str
-    price: float
+    # # После того как сделали ПРИВАТНЫМ price нужно убрать аннотацию price из тела класса,
+    # # просто закомментировал и оставил это для себя:
+    # price: float
     quantity: int
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
         """Конструктор для инициализации объекта. Т.е. для создания экземпляра класса (объекта)"""
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
 
     @classmethod
@@ -43,7 +45,7 @@ class Product:
     #     :param product_data: Параметры товара в словаре.
     #     :param existing_products: Список существующих продуктов для проверки дубликатов.
     #     :return: Object Product"""
-    #     # Проверяю наличие продукта с таким же именем и если есть, то обновляю кол-во и устанавливаю максимальную цену
+    #     # Проверяю наличие продукта с таким же именем и если есть, то: обновляю кол-во, устанавливаю максимальн. цену
     #     for product in existing_products:
     #         if product.name == product_data["name"]:
     #             product.quantity += int(product_data["quantity"])
@@ -57,3 +59,25 @@ class Product:
     #         quantity=int(product_data["quantity"]),
     #     )
     #     return new_product
+
+    @property
+    def price(self) -> float:
+        """Геттер для получения цены, которая ранее была сделана приватным свойством класса.
+        :return: Геттер возвращает цену товара."""
+        return self.__price
+
+    @price.setter
+    def price(self, new_price: float) -> None:
+        """Сеттер для проверки корректности цены (не отрицательное, не ноль) и подтверждения понижения."""
+        if new_price <= 0:
+            print("Цена не должна быть нулевая или отрицательная")
+        elif new_price < self.__price:
+            if self.confirm_price_reduction():
+                self.__price = new_price
+        else:
+            self.__price = new_price
+
+    def confirm_price_reduction(self) -> bool:
+        """Подтверждение понижения цены от пользователя."""
+        user_solution = input("Подтверждаете понижение цены? ('y' - да / 'n' - нет): ").strip().lower()
+        return user_solution == "y"
