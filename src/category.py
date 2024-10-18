@@ -25,7 +25,7 @@ class Category:
 
     def add_product(self, new_product: "Product") -> None:
         """Метод класса для добавления нового продукта в категорию товаров.
-        :type new_product: Object"""
+        :type new_product: Object Product"""
         self.__products.append(new_product)
         Category.product_count += 1
 
