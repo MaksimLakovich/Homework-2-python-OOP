@@ -1,16 +1,47 @@
+from typing import Optional
+
+from src.product import Product
+
+
 class Category:
-    """Класс Product - шаблон для создания объекта с данными какой-либо категории под товары"""
+    """Класс Category - шаблон для создания объекта с данными какой-либо категории товаров"""
 
     name: str
     description: str
-    products: None | list  # Категория товаров может быть создана и без товаров в ней
+    # # После того как сделали ПРИВАТНЫМ products нужно убрать аннотацию products из тела класса,
+    # # просто закомментировал и оставил это для себя:
+    # products: Optional[list]  # Категория товаров может быть создана и без товаров в ней
+
     category_count = 0  # Атрибут класса: подсчет общего количества категорий
     product_count = 0  # Атрибут класса: подсчет общего количества позиций товаров (не складские остатки)
 
-    def __init__(self, name: str, description: str, products: None | list = None) -> None:
-        """Конструктор для инициализации объекта. Т.е. для создания экземпляра класса (объекта)"""
+    def __init__(self, name: str, description: str, products: Optional[list] = None) -> None:
+        """Конструктор для инициализации экземпляра класса (объекта категория)"""
         self.name = name
         self.description = description
-        self.products = products if products else []
+        self.__products = products if products else []
         Category.category_count += 1
-        Category.product_count += len(self.products)
+        Category.product_count += len(self.__products)
+
+    def add_product(self, new_product: "Product") -> None:
+        """Метод класса для добавления нового продукта в категорию товаров.
+        :type new_product: Object"""
+        self.__products.append(new_product)
+        Category.product_count += 1
+
+    # # Условия ЗАДАНИЯ 2 в ДЗ 14.2 немного запутанные, поэтому вот еще вариант реализация,
+    # # если нужно выводить строки продуктов в СПИСКЕ:
+    # @property
+    # def products(self) -> list:
+    #     str_products = []
+    #     for product in self.__products:
+    #         str_products.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
+    #     return str_products
+
+    @property
+    def products(self) -> str:
+        """Геттер для вывода списка товаров, который ранее был сделан приватным свойством класса.
+        :return: Геттер возвращает строку товаров"""
+        return "\n".join(
+            [f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self.__products]
+        )
