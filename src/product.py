@@ -1,6 +1,12 @@
 from typing import Dict, Union
 
 
+def confirm_price_reduction() -> bool:
+    """Подтверждение понижения цены от пользователя."""
+    user_solution = input("Подтверждаете понижение цены? ('y' - да / 'n' - нет): ").strip().lower()
+    return user_solution == "y"
+
+
 class Product:
     """Класс Product - шаблон для создания объекта продукт с данными конкретного товара"""
 
@@ -20,13 +26,13 @@ class Product:
 
     @classmethod
     def new_product(cls, product_data: Dict[str, Union[str, float, int]]) -> "Product":
-        """Класс-метод для создания объекта класса Product. Если продукт с таким именем уже существует,
-        то обновляется его количество и цена в первоначальной записи.
+        """Класс-метод для создания объекта класса Product по входящим данным из СЛОВАРЯ.
+        Если продукт с таким именем уже существует, то обновляется его количество и цена в первоначальной записи.
         :param product_data: Параметры товара в словаре.
         :return: Object Product"""
-        # # Также можно часть кода ниже заменить 1-й строкой с распаковкой словаря: "return cls(**product_data)"
-        # # Но такой вариант вызовет ошибки mypy и является менее надежным и уязвимым, если на вход придут какие-либо
-        # # иные типы данных или иная структура словаря.
+        # Также можно часть кода ниже заменить 1-й строкой с распаковкой словаря: "return cls(**product_data)"
+        # Но такой вариант вызовет ошибки mypy и является менее надежным и уязвимым, если на вход придут какие-либо
+        # иные типы данных или иная структура словаря.
         new_product = cls(
             name=str(product_data["name"]),
             description=str(product_data["description"]),
@@ -72,12 +78,7 @@ class Product:
         if new_price <= 0:
             print("Цена не должна быть нулевая или отрицательная")
         elif new_price < self.__price:
-            if self.confirm_price_reduction():
+            if confirm_price_reduction():
                 self.__price = new_price
         else:
             self.__price = new_price
-
-    def confirm_price_reduction(self) -> bool:
-        """Подтверждение понижения цены от пользователя."""
-        user_solution = input("Подтверждаете понижение цены? ('y' - да / 'n' - нет): ").strip().lower()
-        return user_solution == "y"
