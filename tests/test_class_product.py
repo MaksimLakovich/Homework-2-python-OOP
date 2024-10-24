@@ -61,7 +61,7 @@ def test_set_zero_price(product_phone_samsung: "Product") -> None:
 
 # Замокал функцию print
 @patch("builtins.print", return_value="Цена не должна быть нулевая или отрицательная")
-def test_warning_print_for_zero_and_negative_price(mock_print: MagicMock, product_phone_samsung: Product) -> None:
+def test_warning_print_for_zero_and_negative_price(mock_print: MagicMock, product_phone_samsung: "Product") -> None:
     """Тест проверки вывода ошибки через print."""
     product_phone_samsung.price = 0
     # Проверяю, что print был вызван один раз с нужным сообщением
@@ -76,3 +76,13 @@ def test_confirm_price_reduction(mock_input: MagicMock) -> None:
     assert confirm_price_reduction() is True
     # Проверяю, что input был вызван один раз
     mock_input.assert_called_once()
+
+
+def test_magic_method_product_in_string(product_phone_samsung: "Product") -> None:
+    """Тест магического метода вывода данных о продукте в строковом отображении."""
+    assert str(product_phone_samsung) == "Samsung Galaxy C23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_magic_method_addition_obj_products(product_phone_samsung: "Product", product_phone_xiaomi: "Product") -> None:
+    """Тест магического метода сложения экземпляров класса продукт."""
+    assert product_phone_samsung + product_phone_xiaomi == 1334000
