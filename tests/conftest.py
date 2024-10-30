@@ -2,7 +2,9 @@ import pytest
 import os
 
 from src.category import Category
+from src.lawn_grass import LawnGrass
 from src.product import Product
+from src.smartphone import Smartphone
 
 
 @pytest.fixture
@@ -78,3 +80,30 @@ def fixture_for_expected_json_data():
 @pytest.fixture
 def fixture_for_expected_path_to_json_file():
     return os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "products.json")
+
+
+@pytest.fixture
+def product_from_class_smartphone():
+    return Smartphone(
+        name="Iphone 15",
+        description="512GB, Gray space",
+        price=210000.0,
+        quantity=8,
+        efficiency=98.2,
+        model="15",
+        memory=512,
+        color="Gray space",
+    )
+
+
+@pytest.fixture
+def product_from_class_lawngrass():
+    return LawnGrass(
+        name="Газонная трава",
+        description="Элитная трава для газона",
+        price=500.0,
+        quantity=20,
+        country="Россия",
+        germination_period="7 дней",
+        color="Зеленый",
+    )
