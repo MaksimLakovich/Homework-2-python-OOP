@@ -107,3 +107,11 @@ def product_from_class_lawngrass():
         germination_period="7 дней",
         color="Зеленый",
     )
+
+
+class NotProduct:
+    pass
+
+@pytest.fixture
+def not_product():
+    return NotProduct()

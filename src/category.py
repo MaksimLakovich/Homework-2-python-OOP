@@ -39,7 +39,7 @@ class Category:
             self.__products.append(new_product)
             Category.product_count += 1
         else:
-            raise TypeError
+            raise TypeError("Возникла ошибка TypeError при добавлении не продукта")
 
     @property
     def products(self) -> str:

@@ -1,6 +1,10 @@
 from unittest.mock import MagicMock, patch
 
+import pytest
+
+from src.lawn_grass import LawnGrass
 from src.product import Product, confirm_price_reduction
+from src.smartphone import Smartphone
 
 
 def test_init_class_product(product_phone_samsung: "Product") -> None:
@@ -84,5 +88,14 @@ def test_magic_method_product_in_string(product_phone_samsung: "Product") -> Non
 
 
 def test_magic_method_addition_obj_products(product_phone_samsung: "Product", product_phone_xiaomi: "Product") -> None:
-    """Тест магического метода сложения экземпляров класса продукт."""
+    """Положительный тест магического метода сложения экземпляров класса продукт."""
     assert product_phone_samsung + product_phone_xiaomi == 1334000
+
+
+def test_magic_method_addition_exception(
+    product_from_class_smartphone: "Smartphone", product_from_class_lawngrass: "LawnGrass"
+) -> None:
+    """Негативный тест магического метода сложения и возбуждения исключения."""
+    with pytest.raises(TypeError) as info_expectation:
+        product_from_class_smartphone + product_from_class_lawngrass
+    assert str(info_expectation.value) == "Возникла ошибка TypeError при попытке сложения"

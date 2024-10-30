@@ -34,7 +34,7 @@ class Product:
         if type(other) is self.__class__:
             return self.__price * self.quantity + other.__price * other.quantity
         else:
-            raise TypeError
+            raise TypeError("Возникла ошибка TypeError при попытке сложения")
 
     @classmethod
     def new_product(cls, product_data: Dict[str, Union[str, float, int]]) -> "Product":

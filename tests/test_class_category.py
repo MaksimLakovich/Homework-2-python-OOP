@@ -1,3 +1,5 @@
+import pytest
+
 from src.category import Category
 from src.product import Product
 
@@ -26,8 +28,8 @@ def test_product_count_and_category_count(category_tv_with_products: "Category")
     assert category_tv_with_products.category_count == 3
 
 
-def test_add_product(product_phone_samsung: "Product", category_smartphones_without_products: "Category") -> None:
-    """Тест добавления продукта с помощью метода add_product."""
+def test_positive_add_product(product_phone_samsung: "Product", category_smartphones_without_products: "Category") -> None:
+    """Положительный тест добавления продукта с помощью метода add_product."""
     # Проверяю, что до добавления нового продукта методом add_product() список пуст
     assert len(category_smartphones_without_products.products) == 0
     # Добавляю новый продукт и проверяю изменения
@@ -37,6 +39,13 @@ def test_add_product(product_phone_samsung: "Product", category_smartphones_with
     assert len(category_smartphones_without_products.products.split("\n")) == 1
     # product_count работает накопительным итогом (добавляются рез-ты предыдущих тестов)
     assert category_smartphones_without_products.product_count == 7
+
+
+def test_negative_add_product(not_product: "Product", category_smartphones_without_products: "Category") -> None:
+    """Негативный тест добавления объектов не являющихся классом/подклассом продукта с помощью метода add_product."""
+    with pytest.raises(TypeError) as info_expectation:
+        category_smartphones_without_products.add_product(not_product)
+    assert str(info_expectation.value) == "Возникла ошибка TypeError при добавлении не продукта"
 
 
 def test_category_in_string(category_tv_with_products: "Category") -> None:
