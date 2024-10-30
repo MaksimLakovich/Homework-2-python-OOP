@@ -31,7 +31,10 @@ class Product:
 
     def __add__(self, other: "Product") -> float:
         """Магический метод сложения общей цены у двух продуктов (кол-во на складе продуктов умноженное на цену)."""
-        return self.__price * self.quantity + other.__price * other.quantity
+        if type(other) is self.__class__:
+            return self.__price * self.quantity + other.__price * other.quantity
+        else:
+            raise TypeError
 
     @classmethod
     def new_product(cls, product_data: Dict[str, Union[str, float, int]]) -> "Product":
