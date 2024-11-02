@@ -115,3 +115,4 @@ class NotProduct:
 @pytest.fixture
 def not_product():
     return NotProduct()
+

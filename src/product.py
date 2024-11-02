@@ -94,3 +94,4 @@ class Product:
                 self.__price = new_price
         else:
             self.__price = new_price
+
