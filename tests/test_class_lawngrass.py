@@ -10,3 +10,4 @@ def test_init_class_lawngrass(product_from_class_lawngrass: "LawnGrass") -> None
     assert product_from_class_lawngrass.country == "Россия"
     assert product_from_class_lawngrass.germination_period == "7 дней"
     assert product_from_class_lawngrass.color == "Зеленый"
+
