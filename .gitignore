@@ -166,4 +166,3 @@ cython_debug/
 pytest.ini
 
 src/main.py
-src/get_product_objects.py
