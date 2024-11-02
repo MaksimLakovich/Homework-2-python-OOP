@@ -45,3 +45,4 @@ def test_file_json_not_a_list(fixture_for_expected_path_to_json_file: str) -> No
     with patch("builtins.open", mock_open(read_data=mock_data)):
         data = read_json_file(fixture_for_expected_path_to_json_file)
         assert data == []  # Ожидаем пустой список
+
