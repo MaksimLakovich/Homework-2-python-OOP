@@ -1,5 +1,7 @@
 from typing import Dict, Union
 
+from src.abs_base_product import BaseProduct
+
 
 def confirm_price_reduction() -> bool:
     """Функция подтверждения понижения цены от пользователя."""
@@ -7,7 +9,7 @@ def confirm_price_reduction() -> bool:
     return user_solution == "y"
 
 
-class Product:
+class Product(BaseProduct):
     """Класс Product - шаблон для создания объекта 'продукт'."""
 
     name: str
@@ -29,15 +31,16 @@ class Product:
         :return: Строка в заданном формате."""
         return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other: "Product") -> float:
-        """Магический метод сложения общей цены у двух продуктов (кол-во на складе продуктов умноженное на цену)."""
+    def __add__(self, other: object) -> float:
+        """Магический метод сложения общей цены у двух продуктов (кол-во на складе продуктов умноженное на цену).
+        :return: Итоговая цифра в формате float."""
         if type(other) is self.__class__:
             return self.__price * self.quantity + other.__price * other.quantity
         else:
             raise TypeError("Возникла ошибка TypeError при попытке сложения")
 
     @classmethod
-    def new_product(cls, product_data: Dict[str, Union[str, float, int]]) -> "Product":
+    def new_product(cls, product_data: Dict[str, Union[str, float, int]]) -> object:
         """Класс-метод для создания объекта класса Product по входящим данным из СЛОВАРЯ.
         :param product_data: Словарь с данными создаваемого продукта.
         :return: Object Product"""
@@ -94,4 +97,3 @@ class Product:
                 self.__price = new_price
         else:
             self.__price = new_price
-
