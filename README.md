@@ -121,6 +121,7 @@ poetry install
    - _test_modul_create_class_from_json.py_
    - _test_class_lawngrass.py_
    - _test_class_smartphone.py_
+   - _test_mixin_print_init_info.py_
 
  
 2. Для повышения качества тестирования используются фикстуры (файл: conftest.py) и параметризация тестов.
