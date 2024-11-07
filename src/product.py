@@ -48,7 +48,7 @@ class Product(MixinPrintInitInfo, BaseProduct, PrintableProduct):
             # или LawnGrass), но при этом это подкласс от Product.
             return self.__price * self.quantity + other.__price * other.quantity
         else:
-            raise TypeError("Нельзя складывать объекты разных типов продуктов")
+            raise TypeError("Возникла ошибка TypeError при попытке сложения")
 
     @classmethod
     def new_product(cls, product_data: Dict[str, Union[str, float, int]]) -> "Product":
