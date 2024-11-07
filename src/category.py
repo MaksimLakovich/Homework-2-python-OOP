@@ -48,4 +48,3 @@ class Category:
         return "\n".join(
             [f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self.__products]
         )
-
