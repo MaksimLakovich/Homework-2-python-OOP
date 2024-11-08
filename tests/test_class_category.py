@@ -51,4 +51,3 @@ def test_negative_add_product(not_product: "Product", category_smartphones_witho
 def test_category_in_string(category_tv_with_products: "Category") -> None:
     """Тест вывода количества всех продуктов на складе заданной категории в строковом формате."""
     assert str(category_tv_with_products) == "Телевизоры, количество продуктов: 13 шт."
-

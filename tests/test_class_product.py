@@ -99,4 +99,3 @@ def test_magic_method_addition_exception(
     with pytest.raises(TypeError) as info_expectation:
         product_from_class_smartphone + product_from_class_lawngrass
     assert str(info_expectation.value) == "Возникла ошибка TypeError при попытке сложения"
-

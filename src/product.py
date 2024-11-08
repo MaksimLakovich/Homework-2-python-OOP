@@ -1,5 +1,8 @@
 from typing import Dict, Union
 
+from src.abs_base_product import BaseProduct
+from src.mixin_print_init_info import MixinPrintInitInfo, PrintableProduct
+
 
 def confirm_price_reduction() -> bool:
     """Функция подтверждения понижения цены от пользователя."""
@@ -7,7 +10,7 @@ def confirm_price_reduction() -> bool:
     return user_solution == "y"
 
 
-class Product:
+class Product(MixinPrintInitInfo, BaseProduct, PrintableProduct):
     """Класс Product - шаблон для создания объекта 'продукт'."""
 
     name: str
@@ -23,15 +26,26 @@ class Product:
         self.description = description
         self.__price = price
         self.quantity = quantity
+        super().__init__()
 
     def __str__(self) -> str:
         """Магический метод для возврата продукта в строковом отображении.
         :return: Строка в заданном формате."""
         return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other: "Product") -> float:
-        """Магический метод сложения общей цены у двух продуктов (кол-во на складе продуктов умноженное на цену)."""
-        if type(other) is self.__class__:
+    def __add__(self, other: object) -> float:
+        """Магический метод сложения общей цены у двух продуктов (кол-во на складе продуктов умноженное на цену).
+        :return: Итоговая цифра в формате float."""
+        # # ПЕРВОНАЧАЛЬНЫЙ ВАРИАНТ РЕАЛИЗАЦИИ, НО ОН ПРИВОДИЛ К ОШИБКАМ В ПРОВЕРКЕ mypy СОЗДАННОГО ПОТОМ
+        # # MIXIN_PRINT_INIT_INFO. ПОТОМУ ЧТО ИСПОЛЬЗУЯ В АННОТАЦИИ object МИКСИН НЕ ПОНИМАЛ ЧТО БУДУТ АТРИБУТЫ name,
+        # # quantity, price. НОВЫЙ ВАРИАНТ РЕАЛИЗАЦИИ С ОДНОВРЕМЕННЫМ ИСПОЛЬЗОВАНИЕМ isinstance() И type() РЕШАЕТ ЭТО.
+        # if type(other) is self.__class__:
+        #     return self.__price * self.quantity + other.__price * other.quantity
+        # else:
+        #     raise TypeError("Возникла ошибка TypeError при попытке сложения")
+        if isinstance(other, Product) and type(self) is type(other):
+            # Выше в IF я проверил, что оба объекта относятся к одному и тому же классу (например, только к Smartphone
+            # или LawnGrass), но при этом это подкласс от Product.
             return self.__price * self.quantity + other.__price * other.quantity
         else:
             raise TypeError("Возникла ошибка TypeError при попытке сложения")
@@ -94,4 +108,3 @@ class Product:
                 self.__price = new_price
         else:
             self.__price = new_price
-
