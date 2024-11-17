@@ -28,7 +28,9 @@ def test_product_count_and_category_count(category_tv_with_products: "Category")
     assert category_tv_with_products.category_count == 3
 
 
-def test_positive_add_product(product_phone_samsung: "Product", category_smartphones_without_products: "Category") -> None:
+def test_positive_add_product(
+    product_phone_samsung: "Product", category_smartphones_without_products: "Category"
+) -> None:
     """Положительный тест добавления продукта с помощью метода add_product."""
     # Проверяю, что до добавления нового продукта методом add_product() список пуст
     assert len(category_smartphones_without_products.products) == 0
@@ -51,3 +53,13 @@ def test_negative_add_product(not_product: "Product", category_smartphones_witho
 def test_category_in_string(category_tv_with_products: "Category") -> None:
     """Тест вывода количества всех продуктов на складе заданной категории в строковом формате."""
     assert str(category_tv_with_products) == "Телевизоры, количество продуктов: 13 шт."
+
+
+def test_positive_middle_price_with_products(category_tv_with_products: "Category") -> None:
+    """Тест метода для вычисления среднего ценника всех продуктов в категории."""
+    assert round(category_tv_with_products.middle_price(), 2) == 87666.67
+
+
+def test_negative_middle_price_without_products(category_smartphones_without_products: "Category") -> None:
+    """Тест метода для вычисления среднего ценника, если в категории нет продуктов."""
+    assert category_smartphones_without_products.middle_price() == 0
