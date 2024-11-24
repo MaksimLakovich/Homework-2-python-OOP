@@ -99,3 +99,9 @@ def test_magic_method_addition_exception(
     with pytest.raises(TypeError) as info_expectation:
         product_from_class_smartphone + product_from_class_lawngrass
     assert str(info_expectation.value) == "Возникла ошибка TypeError при попытке сложения"
+
+
+def test_if_quantity_is_null() -> None:
+    """Тест ValueError в конструкторе, если создают продукт с нулевым количеством."""
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product("Бракованный товар", "Неверное количество", 1000.0, 0)

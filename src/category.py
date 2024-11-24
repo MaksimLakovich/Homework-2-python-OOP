@@ -1,3 +1,4 @@
+from itertools import product
 from typing import Optional
 
 from src.product import Product
@@ -48,3 +49,11 @@ class Category:
         return "\n".join(
             [f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт." for product in self.__products]
         )
+
+    def middle_price(self) -> float:
+        """Метод для вычисления среднего ценника всех продуктов в категории.
+        :return: Средний ценник продуктов или 0, если продуктов нет."""
+        try:
+            return float(sum(product.price for product in self.__products) / len(self.__products))
+        except ZeroDivisionError:
+            return 0
